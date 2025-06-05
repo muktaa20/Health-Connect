@@ -14,7 +14,7 @@ const About = () => {
          <div className='relative'>
             <img src="https://media.istockphoto.com/id/1077729946/photo/young-woman-lies-with-closed-eyes-cosmetologist-making-procedur.jpg?s=612x612&w=0&k=20&c=M-4YOnC0CKOLxUyaTAKMxASozks7UTiNAEdXhmyykb4="alt="about1.webp" className='w-full h-auto rounded-lg shadow-lg'/>
             <img src="https://media.istockphoto.com/id/1077729946/photo/young-woman-lies-with-closed-eyes-cosmetologist-making-procedur.jpg?s=612x612&w=0&k=20&c=M-4YOnC0CKOLxUyaTAKMxASozks7UTiNAEdXhmyykb4=" alt="about2.webp" className='w-full h-auto rounded-lg shadow-lg absolute top-20 left-20 border-4 border-white hidden md:flex'/>
-
+hiiiii kiiiigit
          </div>
       </div>
 
