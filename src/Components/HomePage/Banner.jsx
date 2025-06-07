@@ -39,9 +39,9 @@ const Banner = () => {
         </button>
       </div>
 
-      <div className="w-full md:w-1/2 mx-auto mt-8 hidden">
+      <div className="w-full md:w-1/2 mx-auto mt-8">
         <img
-          src="https://img.freepik.com/premium-photo/doctor-animation-with-mask_183364-2215.jpg?ga=GA1.1.1094954375.1742993418&semt=ais_items_boosted&w=740"
+          src="https://img.freepik.com/free-photo/portrait-smiling-young-doctors-standing-together-portrait-medical-staff-inside-modern-hospital-smiling-camera_657921-885.jpg?ga=GA1.1.1094954375.1742993418&semt=ais_hybrid&w=740"
           alt="Banner"
           className="w-9/12 h-auto mt-0 flex justify-center"
         />
