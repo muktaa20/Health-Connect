@@ -22,9 +22,9 @@ const Navbar = () => {
           <Link className='hover:text-[#eb4452]' to="/contact">Contact</Link>
         </div>
 
-        <div className='w-1/4 hidden md:block text-right'>
+        <Link to='/signup' className='w-1/4 hidden md:block text-right'>
           <button className='border px-4 py-2 border-red-400 rounded-lg hover:bg-[#eb4452] hover:text-white'>Sign Up</button>
-        </div>
+        </Link>
 
         <div className='block md:hidden' onClick={() => setOpen(!open)}>
           {open ? <CircleX /> : <Menu />}
@@ -40,7 +40,9 @@ const Navbar = () => {
           <Link className='hover:text-[#eb4452]' to="/doctors">Doctors</Link>
           <Link className='hover:text-[#eb4452]' to="/news">News</Link>
           <Link className='hover:text-[#eb4452]' to="/contact">Contact</Link>
+          <Link to='/signup'>
           <button className='border px-4 py-2 border-red-400 rounded-lg hover:bg-[#eb4452] hover:text-white'>Sign Up</button>
+          </Link>
         </div>
       )}
     </nav>
