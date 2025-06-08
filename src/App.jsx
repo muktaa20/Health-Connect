@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Children } from "react";
 import { Routes, Route } from "react-router-dom"; // Removed BrowserRouter from here
 import Navbar from "./Components/Common/Navbar";
 import Footer from "./Components/Common/Footer";
@@ -12,21 +12,91 @@ import Signup from "./Components/Pages/Signup";
 import Departments from "./Components/Pages/Departments";
 import News from "./Components/Pages/News";
 
-function App() {
+const MainLayout = ({ children }) => {
   return (
     <>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/doctors" element={<Doctors />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/departments" element={<Departments />} />
-        <Route path="/news" element={<News />} />
-      </Routes>
+      {children}
       <Footer />
+    </>
+  );
+};
+
+const AuthLayout = ({ children }) => {
+  return <>{children}</>;
+};
+
+function App() {
+  return (
+    <>
+      {/* <Navbar /> */}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <MainLayout>
+              <Home />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/doctors"
+          element={
+            <MainLayout>
+              <Doctors />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <MainLayout>
+              <About />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/contact"
+          element={
+            <MainLayout>
+              <Contact />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/signin"
+          element={
+            <AuthLayout>
+              <Signin />
+            </AuthLayout>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <AuthLayout>
+              <Signup />
+            </AuthLayout>
+          }
+        />
+        <Route
+          path="/departments"
+          element={
+            <MainLayout>
+              <Departments />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/news"
+          element={
+            <MainLayout>
+              <News />
+            </MainLayout>
+          }
+        />
+      </Routes>
+      {/* <Footer /> */}
     </>
   );
 }

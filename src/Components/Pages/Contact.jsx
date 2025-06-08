@@ -1,5 +1,5 @@
-import React from 'react';
-import ContactSection from '../HomePage/Contact';
+import React from "react";
+import ContactSection from "../HomePage/Contact";
 
 const Contact = () => {
   return (
@@ -10,4 +10,3 @@ const Contact = () => {
 };
 
 export default Contact;
-

@@ -75,8 +75,13 @@ const Footer = () => {
           Made with <span className="text-red-400">❤️</span> by Health Connect
         </p>
         <p>
-          <a href="#" className="hover:underline">Terms & Use</a> ·{" "}
-          <a href="#" className="hover:underline">Privacy Policy</a>
+          <a href="#" className="hover:underline">
+            Terms & Use
+          </a>{" "}
+          ·{" "}
+          <a href="#" className="hover:underline">
+            Privacy Policy
+          </a>
         </p>
       </div>
     </footer>
