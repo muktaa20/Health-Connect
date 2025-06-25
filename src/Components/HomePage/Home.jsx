@@ -13,7 +13,7 @@ const Home = () => {
       <Banner />
       <ServicesSection />
       <About />
-      <PopularDepartments />
+      <PopularDepartments isHomePage={true} />
       <Offer />
       <Doctors />
       <Contact />

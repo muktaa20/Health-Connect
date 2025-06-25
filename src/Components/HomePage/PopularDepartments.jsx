@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import React, { useEffect, useState } 
+from "react";
 import {
   faHeartPulse,
   faUserMd,
@@ -18,7 +20,7 @@ const iconMapping = {
   faSyringe: faSyringe,
 };
 
-const PopularDepartments = () => {
+const PopularDepartments = ({isHomePage}) => {
   const [departments, setDepartments] = useState([]);
 
   useEffect(() => {
@@ -35,14 +37,17 @@ const PopularDepartments = () => {
 
   return (
     <div className="bg-gray-50 py-12 text-center">
-      <h4 className="text-gray-500 uppercase text-sm mb-2">Why Choose Us?</h4>
+     {isHomePage? <> <h4 className="text-gray-500 uppercase text-sm mb-2">Why Choose Us?</h4>
       <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
         Health connect popular Departments
       </h2>
       <p className="text-gray-500 mb-10 px-4">
         Discover the range of medical specialties that our expert team offers to
         ensure comprehensive health care services.
-      </p>
+      </p> </> : <>
+      <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">All Available Departments</h2>
+      <p className="text-gray-500 mb-10 max-w-2xl mx-auto">We provide a wide range of medical specialities to cater to your healthcare needs. Our departments are staffed by highly qualified professionals who are committed exceptional care.</p>
+      </> }
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 w-11/12 mx-auto">
         {departments.slice(0, 5).map((dept, index) => (
@@ -55,11 +60,14 @@ const PopularDepartments = () => {
           </div>
         ))}
       </div>
-      <div className="mt-10">
-        <button className="px-6 py-3  bg-red-600 text-white font-semibold rounded-full hover:scale-105">
-          <a href=""> View More</a>
-        </button>
-      </div>
+     {isHomePage && (<div className="mt-10">
+  <Link to="/departments">
+    <button className="px-6 py-3 bg-red-600 text-white font-semibold rounded-full hover:scale-105">
+      View More
+    </button>
+  </Link>
+</div>)}
+
     </div>
   );
 };
