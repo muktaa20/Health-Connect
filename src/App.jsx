@@ -1,5 +1,6 @@
-import React, { Children } from "react";
-import { Routes, Route } from "react-router-dom"; // Removed BrowserRouter from here
+// App.jsx
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./Components/Common/Navbar";
 import Footer from "./Components/Common/Footer";
 import "./index.css";
@@ -11,93 +12,102 @@ import Signin from "./Components/Pages/Signin";
 import Signup from "./Components/Pages/Signup";
 import Departments from "./Components/Pages/Departments";
 import News from "./Components/Pages/News";
+import DoctorDetails from "./Components/Pages/DoctorDetails";
 
-const MainLayout = ({ children }) => {
-  return (
-    <>
-      <Navbar />
-      {children}
-      <Footer />
-    </>
-  );
-};
+const MainLayout = ({ children }) => (
+  <>
+    <Navbar />
+    {children}
+    <Footer />
+  </>
+);
 
-const AuthLayout = ({ children }) => {
-  return <>{children}</>;
-};
+const AuthLayout = ({ children }) => <>{children}</>;
 
 function App() {
   return (
-    <>
-      {/* <Navbar /> */}
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <MainLayout>
-              <Home />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/doctors"
-          element={
-            <MainLayout>
-              <Doctors />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/about"
-          element={
-            <MainLayout>
-              <About />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/contact"
-          element={
-            <MainLayout>
-              <Contact />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/signin"
-          element={
-            <AuthLayout>
-              <Signin />
-            </AuthLayout>
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            <AuthLayout>
-              <Signup />
-            </AuthLayout>
-          }
-        />
-        <Route
-          path="/departments"
-          element={
-            <MainLayout>
-              <Departments />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/news"
-          element={
-            <MainLayout>
-              <News />
-            </MainLayout>
-          }
-        />
-      </Routes>
-      {/* <Footer /> */}
-    </>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <MainLayout>
+            <Home />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/doctors"
+        element={
+          <MainLayout>
+            <Doctors />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/doctor/:department"
+        element={
+          <MainLayout>
+            <Doctors />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/appointment/:id"
+        element={
+          <MainLayout>
+            <DoctorDetails />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/about"
+        element={
+          <MainLayout>
+            <About />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/contact"
+        element={
+          <MainLayout>
+            <Contact />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/signin"
+        element={
+          <AuthLayout>
+            <Signin />
+          </AuthLayout>
+        }
+      />
+      <Route
+        path="/signup"
+        element={
+          <AuthLayout>
+            <Signup />
+          </AuthLayout>
+        }
+      />
+      <Route
+        path="/department"
+        element={
+          <MainLayout>
+            <Departments />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/news"
+        element={
+          <MainLayout>
+            <News />
+          </MainLayout>
+        }
+      />
+    </Routes>
   );
 }
 
