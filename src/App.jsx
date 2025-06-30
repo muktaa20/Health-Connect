@@ -13,6 +13,7 @@ import Signup from "./Components/Pages/Signup";
 import Departments from "./Components/Pages/Departments";
 import News from "./Components/Pages/News";
 import DoctorDetails from "./Components/Pages/DoctorDetails";
+import Appointments from "./Components/Pages/Appointments";
 
 const MainLayout = ({ children }) => (
   <>
@@ -72,6 +73,14 @@ function App() {
         element={
           <MainLayout>
             <Contact />
+          </MainLayout>
+        }
+      />
+      <Route
+        path="/appointments"
+        element={
+          <MainLayout>
+            <Appointments />
           </MainLayout>
         }
       />

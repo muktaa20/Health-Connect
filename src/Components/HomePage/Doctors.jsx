@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   FaFacebookF,
   FaTwitter,
@@ -80,9 +81,11 @@ const Doctors = () => {
       </div>
 
       <div className="text-center mt-10">
-        <button className="bg-red-600 text-white px-6 py-2 rounded-full font-medium hover:bg-red-700 transition">
-          View More
-        </button>
+        <Link to="/doctors">
+          <button className="bg-red-600 text-white px-6 py-2 rounded-full font-medium hover:bg-red-700 transition">
+            View More
+          </button>
+        </Link>
       </div>
     </section>
   );
