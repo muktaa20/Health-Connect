@@ -77,6 +77,15 @@ function App() {
         }
       />
       <Route
+        path="/news"
+        element={
+          <MainLayout>
+            <News />
+          </MainLayout>
+        }
+      />
+
+      <Route
         path="/appointments"
         element={
           <MainLayout>
