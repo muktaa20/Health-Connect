@@ -117,7 +117,7 @@ const Doctors = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {doctors.map((doctor) => (
                 <Link
-                  to={`/appointment/${doctor.id}`} 
+                  to={`/appointment/${doctor.id}`}
                   key={doctor.id || doctor._id || doctor.name}
                 >
                   <div className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center">

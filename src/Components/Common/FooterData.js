@@ -1,4 +1,3 @@
-// src/Components/Common/FooterData.js
 export const footerData = {
   company: ["About Us", "Departments", "Find a Doctor", "News"],
   quickLinks: [

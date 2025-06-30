@@ -31,7 +31,6 @@ const coreValuesData = [
 const About = () => {
   return (
     <div className="pt-5">
-      {/* Hero Section */}
       <section
         className="text-white text-center py-20 px-4 md:px-10 lg:px-20 bg-cover bg-center rounded-3xl max-w-7xl mx-auto"
         style={{
@@ -50,7 +49,6 @@ const About = () => {
         </p>
       </section>
 
-      {/* Mission & Vision Section */}
       <section className="py-6 px-4 grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
         <div className="bg-gray-100 p-6 md:p-8 rounded-xl shadow">
           <h2 className="text-2xl font-bold mb-2">Our Mission</h2>
@@ -69,7 +67,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* Core Values Section */}
       <section className="bg-white py-8 px-4 text-center">
         <h2 className="text-3xl font-bold mb-12">Our Core Values</h2>
         <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-3 max-w-6xl mx-auto">

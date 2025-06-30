@@ -8,6 +8,7 @@ const Contact = () => {
     name: "",
     email: "",
     phone: "",
+    subject: "",
     message: "",
   });
 
@@ -22,34 +23,34 @@ const Contact = () => {
     setLoading(true);
 
     try {
-      const res = await fetch(
-        "https://backend-health-connect.vercel.app/contact/get_in_touch",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const res = await fetch("https://httpbin.org/post", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
       const result = await res.json();
+      console.log("Test API Response:", result);
 
-      if (res.ok) {
-        toast.success("Message sent successfully!", { position: "top-right" });
-        setFormData({ name: "", email: "", phone: "", message: "" });
-      } else {
-        toast.error(result.message || "Failed to send message.");
-      }
+      toast.success("Mesaage send ", { position: "top-right" });
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+      });
     } catch (error) {
-      toast.error("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Try again.");
     }
 
     setLoading(false);
   };
 
   return (
-    <section className="bg-white py-16 px-4" id="contact">
+    <section className="bg-white py-26 px-4" id="contact">
       <ToastContainer />
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-4">
@@ -61,7 +62,6 @@ const Contact = () => {
         </p>
 
         <div className="flex flex-col md:flex-row gap-10 items-center">
-          {/* Image Section */}
           <div className="md:w-1/2">
             <img
               src={contactImage}
@@ -73,7 +73,6 @@ const Contact = () => {
           <form
             onSubmit={handleSubmit}
             className="md:w-1/2 w-full bg-gray-50 p-8 rounded-xl shadow space-y-6"
-            aria-label="Contact form"
           >
             <input
               required
@@ -82,7 +81,7 @@ const Contact = () => {
               value={formData.name}
               onChange={handleChange}
               placeholder="Your Name"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md"
             />
             <input
               required
@@ -91,15 +90,25 @@ const Contact = () => {
               value={formData.email}
               onChange={handleChange}
               placeholder="Your Email"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md"
             />
             <input
+              required
               name="phone"
               type="text"
               value={formData.phone}
               onChange={handleChange}
+              placeholder="Your Phone Number"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md"
+            />
+            <input
+              required
+              name="subject"
+              type="text"
+              value={formData.subject}
+              onChange={handleChange}
               placeholder="Subject"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md"
             />
             <textarea
               required
@@ -108,7 +117,7 @@ const Contact = () => {
               value={formData.message}
               onChange={handleChange}
               placeholder="Message"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md"
             />
 
             <button

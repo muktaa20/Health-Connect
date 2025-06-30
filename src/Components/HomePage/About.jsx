@@ -21,9 +21,10 @@ const About = () => {
   const toggleDetails = () => setShowMore((prev) => !prev);
 
   return (
-    <div className="flex flex-col md:flex-row items-center md:px-6 mb-20 mt-20 w-3/4 mx-auto">
+    <div className="flex flex-col md:flex-row items-center md:px-6 mb-20 mt-20 pt-10 w-3/4 mx-auto">
+
       {/* Left Image Section */}
-      <div className="md:w-1/2 mb-8 md:mb-0 justify-center">
+      <div className="md:w-1/2 mb-8 md:mb-0 justify-center ">
         <div className="relative">
           <img
             src="https://media.istockphoto.com/id/1077729946/photo/young-woman-lies-with-closed-eyes-cosmetologist-making-procedur.jpg?s=612x612&w=0&k=20&c=M-4YOnC0CKOLxUyaTAKMxASozks7UTiNAEdXhmyykb4="
@@ -55,7 +56,10 @@ const About = () => {
 
         <ul className="space-y-3 mb-6 text-gray-600 text-left">
           {checklistItems.map((item, index) => (
-            <li key={index} className="flex items-center text-[14px] md:text-[16px]">
+            <li
+              key={index}
+              className="flex items-center text-[14px] md:text-[16px]"
+            >
               <BadgeCheck className="text-red-500 md:mr-3 mr-1" />
               {item}
             </li>
@@ -63,7 +67,10 @@ const About = () => {
 
           {showMore &&
             extraChecklistItems.map((item, index) => (
-              <li key={index} className="flex items-center text-[14px] md:text-[16px]">
+              <li
+                key={index}
+                className="flex items-center text-[14px] md:text-[16px]"
+              >
                 <BadgeCheck className="text-red-500 md:mr-3 mr-1" />
                 {item}
               </li>
@@ -82,7 +89,3 @@ const About = () => {
 };
 
 export default About;
-
-
-
-
