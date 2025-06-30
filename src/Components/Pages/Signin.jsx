@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import doc from "../../assets/doc.png";
+import doc from "../../assets/doc.jpg";
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -39,7 +39,8 @@ const Signin = () => {
 
         setTimeout(() => {
           navigate("/");
-        }, 1000);
+          window.location.reload();
+        }, 2000);
       } else {
         setErrorMsg(result.detail || "Login failed. Please try again.");
       }
@@ -55,7 +56,11 @@ const Signin = () => {
     <div className="flex flex-col md:flex-row min-h-screen">
       {/* Image Section */}
       <div className="hidden md:block md:w-1/2">
-        <img src={doc} alt="Doctor" className="w-full h-full object-cover" />
+        <img
+          className="w-[500px] h-[700px] object-contain mx-auto my-auto"
+          src={doc}
+          alt="Doctor"
+        />
       </div>
 
       {/* Form Section */}

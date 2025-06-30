@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import doc from "../../assets/doc.png";
+import doc from "../../assets/doc.jpg";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -71,6 +71,8 @@ const Signup = () => {
       if (response.ok) {
         console.log("Email verified successfully!");
         navigate("/signin");
+
+        window.location.reload();
       } else {
         const result = await response.text();
         console.error("Verification Failed:", result);
@@ -85,7 +87,11 @@ const Signup = () => {
   return (
     <div className="flex min-h-screen">
       <div className="hidden md:block md:w-1/2 h-screen">
-        <img className="w-full h-full object-fill" src={doc} alt="Doctor" />
+        <img
+          className="w-[500px] h-[700px] object-contain mx-auto my-auto"
+          src={doc}
+          alt="Doctor"
+        />
       </div>
 
       <div className="w-full md:w-1/2 flex flex-col items-center justify-center p-8 md:p-12 bg-white">

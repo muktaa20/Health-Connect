@@ -49,8 +49,8 @@ const PopularDepartments = ({isHomePage}) => {
       <p className="text-gray-500 mb-10 max-w-2xl mx-auto">We provide a wide range of medical specialities to cater to your healthcare needs. Our departments are staffed by highly qualified professionals who are committed exceptional care.</p>
       </> }
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 w-11/12 mx-auto">
-        {departments.slice(0, 5).map((dept, index) => (
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-6 w-11/12 mx-auto">
+        {departments.slice(0, 8).map((dept, index) => (
           <div
             key={index}
             className="bg-gradient-to-b from-red-400 to-red-600 text-white rounded-xl shadow-md p-6 flex flex-col items-center transition transform hover:scale-105"
@@ -61,7 +61,7 @@ const PopularDepartments = ({isHomePage}) => {
         ))}
       </div>
      {isHomePage && (<div className="mt-10">
-  <Link to="/departments">
+  <Link to="/department">
     <button className="px-6 py-3 bg-red-600 text-white font-semibold rounded-full hover:scale-105">
       View More
     </button>
