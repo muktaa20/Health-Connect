@@ -1,5 +1,5 @@
 import { Phone } from "lucide-react";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 // import { redirect } from "react-router-dom";
 const Appointments = () => {
   const [loading, setLoading] = useState(true);

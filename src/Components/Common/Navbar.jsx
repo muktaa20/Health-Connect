@@ -30,7 +30,7 @@ const Navbar = () => {
 
   const navLinkStyle = ({ isActive }) =>
     isActive
-      ? "text-[#eb4452] font-semibold border-b-2 border-[#eb4452] pb-1"
+      ? "text-[#eb4452] font-semibold "
       : "hover:text-[#eb4452] transition";
 
   return (
@@ -44,12 +44,24 @@ const Navbar = () => {
         </div>
 
         <div className="md:flex justify-evenly w-1/2 text-lg hidden space-x-6">
-          <NavLink to="/" className={navLinkStyle}>Home</NavLink>
-          <NavLink to="/about" className={navLinkStyle}>About</NavLink>
-          <NavLink to="/department" className={navLinkStyle}>Department</NavLink>
-          <NavLink to="/doctors" className={navLinkStyle}>Doctors</NavLink>
-          <NavLink to="/news" className={navLinkStyle}>News</NavLink>
-          <NavLink to="/contact" className={navLinkStyle}>Contact</NavLink>
+          <NavLink to="/" className={navLinkStyle}>
+            Home
+          </NavLink>
+          <NavLink to="/about" className={navLinkStyle}>
+            About
+          </NavLink>
+          <NavLink to="/department" className={navLinkStyle}>
+            Department
+          </NavLink>
+          <NavLink to="/doctors" className={navLinkStyle}>
+            Doctors
+          </NavLink>
+          <NavLink to="/news" className={navLinkStyle}>
+            News
+          </NavLink>
+          <NavLink to="/contact" className={navLinkStyle}>
+            Contact
+          </NavLink>
         </div>
 
         {userName ? (
@@ -96,12 +108,24 @@ const Navbar = () => {
 
       {open && (
         <div className="md:hidden mt-4 flex flex-col space-y-4 text-lg font-semibold">
-          <NavLink to="/" className={navLinkStyle}>Home</NavLink>
-          <NavLink to="/about" className={navLinkStyle}>About</NavLink>
-          <NavLink to="/department" className={navLinkStyle}>Department</NavLink>
-          <NavLink to="/doctors" className={navLinkStyle}>Doctors</NavLink>
-          <NavLink to="/news" className={navLinkStyle}>News</NavLink>
-          <NavLink to="/contact" className={navLinkStyle}>Contact</NavLink>
+          <NavLink to="/" className={navLinkStyle}>
+            Home
+          </NavLink>
+          <NavLink to="/about" className={navLinkStyle}>
+            About
+          </NavLink>
+          <NavLink to="/department" className={navLinkStyle}>
+            Department
+          </NavLink>
+          <NavLink to="/doctors" className={navLinkStyle}>
+            Doctors
+          </NavLink>
+          <NavLink to="/news" className={navLinkStyle}>
+            News
+          </NavLink>
+          <NavLink to="/contact" className={navLinkStyle}>
+            Contact
+          </NavLink>
           <Link to="/signup">
             <button className="border px-4 py-2 border-red-400 rounded-lg hover:bg-[#eb4452] hover:text-white">
               Sign Up
@@ -114,4 +138,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

@@ -41,7 +41,6 @@ const Banner = () => {
           </button>
         </Link>
 
-        {/* Mobile Image */}
         <img
           src="https://img.freepik.com/free-photo/portrait-smiling-young-doctors-standing-together-portrait-medical-staff-inside-modern-hospital-smiling-camera_657921-885.jpg?ga=GA1.1.1094954375.1742993418&semt=ais_hybrid&w=740"
           alt="Mobile Doctor Banner"

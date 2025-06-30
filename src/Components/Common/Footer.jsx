@@ -1,4 +1,3 @@
-// src/Components/Common/Footer.jsx
 import React from "react";
 import { footerData } from "./FooterData";
 import { MapPin, Phone, Mail } from "lucide-react";
@@ -22,7 +21,9 @@ const Footer = () => {
               placeholder="Email"
               className="px-4 py-2 bg-transparent outline-none flex-1"
             />
-            <button className="bg-red-500 px-4 text-white">SUBSCRIBE</button>
+            <button className="bg-red-500 sm:text-small px-4 text-white">
+              SUBSCRIBE
+            </button>
           </div>
           <div className="flex gap-4 mt-4">
             <i className="fab fa-facebook-f"></i>
