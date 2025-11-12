@@ -4,7 +4,7 @@ import doc from "../../assets/doc.jpg";
 
 const Signin = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
@@ -14,39 +14,33 @@ const Signin = () => {
     setLoading(true);
     setErrorMsg("");
 
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: new URLSearchParams({
-        username: email, // API expects "username", not "email"
-        password: password,
-      }).toString(),
-    };
-
     try {
       const response = await fetch(
         "https://backend-health-connect.vercel.app/auth/login",
-        requestOptions
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({
+            username,
+            password,
+          }).toString(),
+        }
       );
+
       const result = await response.json();
 
       if (response.ok) {
         localStorage.setItem("token", result.access_token);
         localStorage.setItem("token_type", result.token_type);
-        localStorage.setItem("username", result.username);
+        localStorage.setItem("username", username);
 
-        setTimeout(() => {
-          navigate("/");
-          window.location.reload();
-        }, 2000);
+        navigate("/");
       } else {
-        setErrorMsg(result.detail || "Login failed. Please try again.");
+        setErrorMsg(result.detail || "Invalid username or password.");
       }
-    } catch (error) {
-      setErrorMsg("An unexpected error occurred.");
-      console.error("Login error:", error);
+    } catch (err) {
+      console.error("Login error:", err);
+      setErrorMsg("Server not responding. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -54,7 +48,6 @@ const Signin = () => {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
-      {/* Image Section */}
       <div className="hidden md:block md:w-1/2">
         <img
           className="w-[500px] h-[700px] object-contain mx-auto my-auto"
@@ -63,33 +56,29 @@ const Signin = () => {
         />
       </div>
 
-      {/* Form Section */}
       <div className="w-full md:w-1/2 flex flex-col justify-center px-6 py-12 bg-white">
         <h1 className="text-4xl font-bold text-center mb-6">Welcome Back</h1>
 
         <form
           onSubmit={handleLogin}
           className="max-w-md mx-auto w-full space-y-5 bg-gray-100 p-6 rounded-lg shadow"
-          aria-label="Login form"
         >
           {errorMsg && (
             <p className="text-red-500 text-center text-sm">{errorMsg}</p>
           )}
 
           <input
-            type="email"
+            type="text"
             required
-            aria-label="Email address"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             className="w-full px-4 py-3 border rounded focus:outline-none focus:ring-2 focus:ring-red-400"
           />
 
           <input
             type="password"
             required
-            aria-label="Password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -106,7 +95,7 @@ const Signin = () => {
         </form>
 
         <p className="mt-4 text-center text-gray-600">
-          Don&apos;t have an account?{" "}
+          Don’t have an account?{" "}
           <a href="/signup" className="text-red-500 underline">
             Sign Up
           </a>
