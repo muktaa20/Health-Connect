@@ -10,38 +10,41 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [showOTPForm, setShowOTPForm] = useState(false);
   const [otp, setOtp] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        username,
-        name,
-        password,
-      }),
-    };
+    setErrorMsg("");
 
     try {
       const response = await fetch(
         "https://backend-health-connect.vercel.app/auth/signup",
-        requestOptions
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name,
+            username,
+            email,
+            password,
+          }),
+        }
       );
-      const result = await response.text();
+
+      const resultText = await response.text();
+
       if (response.ok) {
-        console.log("Signup Successful", result);
+        console.log("Signup Successful:", resultText);
         setShowOTPForm(true);
+      } else {
+        setErrorMsg(resultText || "Signup failed. Try again.");
       }
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.error(err);
+      setErrorMsg("Network error. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -50,35 +53,31 @@ const Signup = () => {
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        verification_code: otp,
-      }),
-    };
+    setErrorMsg("");
 
     try {
       const response = await fetch(
         "https://backend-health-connect.vercel.app/auth/verify-email",
-        requestOptions
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            verification_code: otp,
+          }),
+        }
       );
 
       if (response.ok) {
-        console.log("Email verified successfully!");
+        alert("Email verified successfully!");
         navigate("/signin");
-
-        window.location.reload();
       } else {
-        const result = await response.text();
-        console.error("Verification Failed:", result);
+        const text = await response.text();
+        setErrorMsg(text || "Invalid OTP. Try again.");
       }
-    } catch (error) {
-      console.error("Verification error", error);
+    } catch (err) {
+      console.error(err);
+      setErrorMsg("Server error while verifying OTP.");
     } finally {
       setLoading(false);
     }
@@ -95,18 +94,18 @@ const Signup = () => {
       </div>
 
       <div className="w-full md:w-1/2 flex flex-col items-center justify-center p-8 md:p-12 bg-white">
-        <div className="w-full max-w-lg text-center bg-white rounded-lg">
-          <div className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-800 mb-2">
-              Welcome to HealthConnect
-            </h1>
-            <p className="text-gray-600">
-              {showOTPForm
-                ? "Please enter the verification code sent to your email"
-                : "Create your account and start your healthcare journey"}
-            </p>
-          </div>
+        <div className="w-full max-w-lg text-center">
+          <h1 className="text-4xl font-bold text-gray-800 mb-2">
+            Welcome to HealthConnect
+          </h1>
+          <p className="text-gray-600 mb-6">
+            {showOTPForm
+              ? "Enter the OTP sent to your email"
+              : "Create your account and start your healthcare journey"}
+          </p>
         </div>
+
+        {errorMsg && <p className="text-red-500 text-center mb-4">{errorMsg}</p>}
 
         {!showOTPForm ? (
           <form
@@ -115,35 +114,40 @@ const Signup = () => {
           >
             <input
               type="text"
-              onChange={(e) => setName(e.target.value)}
               value={name}
-              placeholder="Enter full name"
-              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 placeholder-gray-500 transition-colors"
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Full Name"
+              className="w-full px-4 py-3 border rounded-md focus:outline-none"
+              required
             />
             <input
               type="text"
-              onChange={(e) => setUsername(e.target.value)}
               value={username}
+              onChange={(e) => setUsername(e.target.value)}
               placeholder="Username"
-              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 placeholder-gray-500 transition-colors"
+              className="w-full px-4 py-3 border rounded-md focus:outline-none"
+              required
             />
             <input
               type="email"
-              onChange={(e) => setEmail(e.target.value)}
               value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
-              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 placeholder-gray-500 transition-colors"
+              className="w-full px-4 py-3 border rounded-md focus:outline-none"
+              required
             />
             <input
               type="password"
-              onChange={(e) => setPassword(e.target.value)}
               value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
-              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 placeholder-gray-500 transition-colors"
+              className="w-full px-4 py-3 border rounded-md focus:outline-none"
+              required
             />
             <button
               type="submit"
-              className="w-full py-3 mt-5 bg-red-500 text-white font-semibold rounded-md hover:bg-red-700 transition duration-300"
+              disabled={loading}
+              className="w-full py-3 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
             >
               {loading ? "Signing up..." : "Sign Up"}
             </button>
@@ -158,12 +162,13 @@ const Signup = () => {
               placeholder="Enter OTP"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none"
+              className="w-full px-4 py-3 border rounded-md focus:outline-none"
+              required
             />
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 transition duration-300"
+              className="w-full py-3 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 transition"
             >
               {loading ? "Verifying..." : "Verify OTP"}
             </button>
@@ -173,10 +178,7 @@ const Signup = () => {
         {!showOTPForm && (
           <p className="mt-6 text-gray-600 text-center">
             Already have an account?{" "}
-            <a
-              href="/signin"
-              className="text-red-500 hover:underline font-medium transition-colors"
-            >
+            <a href="/signin" className="text-red-500 hover:underline">
               Log In
             </a>
           </p>
@@ -187,3 +189,391 @@ const Signup = () => {
 };
 
 export default Signup;
+
+
+// import React, { useState } from "react";
+// import { useNavigate } from "react-router-dom";
+// import doc from "../../assets/doc.jpg";
+
+// const Signup = () => {
+//   const [name, setName] = useState("");
+//   const [username, setUsername] = useState("");
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [loading, setLoading] = useState(false);
+//   const [showOTPForm, setShowOTPForm] = useState(false);
+//   const [otp, setOtp] = useState("");
+//   const [errorMsg, setErrorMsg] = useState("");
+
+//   const navigate = useNavigate();
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     setLoading(true);
+//     setErrorMsg("");
+
+//     try {
+//       const response = await fetch(
+//         "https://backend-health-connect.vercel.app/auth/signup",
+//         {
+//           method: "POST",
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//           body: JSON.stringify({
+//             email,
+//             username,
+//             name,
+//             password,
+//           }),
+//         }
+//       );
+//       const result = await response.text();
+
+//       if (response.ok) {
+//         console.log("Signup Successful", result);
+//         setShowOTPForm(true);
+//       } else {
+//         setErrorMsg(result || "Signup failed. Try again.");
+//       }
+//     } catch (error) {
+//       setErrorMsg("Network or server error.");
+//       console.error(error);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const handleVerifyOtp = async (e) => {
+//     e.preventDefault();
+//     setLoading(true);
+//     setErrorMsg("");
+
+//     try {
+//       const response = await fetch(
+//         "https://backend-health-connect.vercel.app/auth/verify-email",
+//         {
+//           method: "POST",
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//           body: JSON.stringify({
+//             email,
+//             verification_code: otp,
+//           }),
+//         }
+//       );
+
+//       if (response.ok) {
+//         console.log("Email verified!");
+//         navigate("/signin");
+//         window.location.reload();
+//       } else {
+//         const result = await response.text();
+//         setErrorMsg(result || "Verification failed.");
+//       }
+//     } catch (error) {
+//       setErrorMsg("OTP verification error.");
+//       console.error(error);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   return (
+//     <div className="flex min-h-screen">
+//       <div className="hidden md:block md:w-1/2 h-screen">
+//         <img
+//           className="w-[500px] h-[700px] object-contain mx-auto my-auto"
+//           src={doc}
+//           alt="Doctor"
+//         />
+//       </div>
+
+//       <div className="w-full md:w-1/2 flex flex-col items-center justify-center p-8 md:p-12 bg-white">
+//         <div className="w-full max-w-lg text-center">
+//           <h1 className="text-4xl font-bold text-gray-800 mb-2">
+//             Welcome to HealthConnect
+//           </h1>
+//           <p className="text-gray-600 mb-6">
+//             {showOTPForm
+//               ? "Enter the OTP sent to your email"
+//               : "Create your account and start your healthcare journey"}
+//           </p>
+//         </div>
+
+//         {errorMsg && <p className="text-red-500 text-center mb-4">{errorMsg}</p>}
+
+//         {!showOTPForm ? (
+//           <form
+//             onSubmit={handleSubmit}
+//             className="w-full md:w-3/4 shadow-lg p-8 space-y-4"
+//           >
+//             <input
+//               type="text"
+//               value={name}
+//               onChange={(e) => setName(e.target.value)}
+//               placeholder="Full Name"
+//               className="w-full px-4 py-3 border rounded-md focus:outline-none"
+//               required
+//             />
+//             <input
+//               type="text"
+//               value={username}
+//               onChange={(e) => setUsername(e.target.value)}
+//               placeholder="Username"
+//               className="w-full px-4 py-3 border rounded-md focus:outline-none"
+//               required
+//             />
+//             <input
+//               type="email"
+//               value={email}
+//               onChange={(e) => setEmail(e.target.value)}
+//               placeholder="Email"
+//               className="w-full px-4 py-3 border rounded-md focus:outline-none"
+//               required
+//             />
+//             <input
+//               type="password"
+//               value={password}
+//               onChange={(e) => setPassword(e.target.value)}
+//               placeholder="Password"
+//               className="w-full px-4 py-3 border rounded-md focus:outline-none"
+//               required
+//             />
+//             <button
+//               type="submit"
+//               disabled={loading}
+//               className="w-full py-3 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
+//             >
+//               {loading ? "Signing up..." : "Sign Up"}
+//             </button>
+//           </form>
+//         ) : (
+//           <form
+//             onSubmit={handleVerifyOtp}
+//             className="space-y-4 shadow-lg p-10 w-full max-w-md"
+//           >
+//             <input
+//               type="text"
+//               placeholder="Enter OTP"
+//               value={otp}
+//               onChange={(e) => setOtp(e.target.value)}
+//               className="w-full px-4 py-3 border rounded-md focus:outline-none"
+//               required
+//             />
+//             <button
+//               type="submit"
+//               disabled={loading}
+//               className="w-full py-3 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 transition"
+//             >
+//               {loading ? "Verifying..." : "Verify OTP"}
+//             </button>
+//           </form>
+//         )}
+
+//         {!showOTPForm && (
+//           <p className="mt-6 text-gray-600 text-center">
+//             Already have an account?{" "}
+//             <a href="/signin" className="text-red-500 hover:underline">
+//               Log In
+//             </a>
+//           </p>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Signup;
+
+
+// import React, { useState } from "react";
+// import { useNavigate } from "react-router-dom";
+// import doc from "../../assets/doc.jpg";
+
+// const Signup = () => {
+//   const [name, setName] = useState("");
+//   const [username, setUsername] = useState("");
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [loading, setLoading] = useState(false);
+//   const [showOTPForm, setShowOTPForm] = useState(false);
+//   const [otp, setOtp] = useState("");
+
+//   const navigate = useNavigate();
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     setLoading(true);
+
+//     const requestOptions = {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         email,
+//         username,
+//         name,
+//         password,
+//       }),
+//     };
+
+//     try {
+//       const response = await fetch(
+//         "https://backend-health-connect.vercel.app/auth/signup",
+//         requestOptions
+//       );
+//       const result = await response.text();
+//       if (response.ok) {
+//         console.log("Signup Successful", result);
+//         setShowOTPForm(true);
+//       }
+//     } catch (error) {
+//       console.log(error);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const handleVerifyOtp = async (e) => {
+//     e.preventDefault();
+//     setLoading(true);
+
+//     const requestOptions = {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         email,
+//         verification_code: otp,
+//       }),
+//     };
+
+//     try {
+//       const response = await fetch(
+//         "https://backend-health-connect.vercel.app/auth/verify-email",
+//         requestOptions
+//       );
+
+//       if (response.ok) {
+//         console.log("Email verified successfully!");
+//         navigate("/signin");
+
+//         window.location.reload();
+//       } else {
+//         const result = await response.text();
+//         console.error("Verification Failed:", result);
+//       }
+//     } catch (error) {
+//       console.error("Verification error", error);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   return (
+//     <div className="flex min-h-screen">
+//       <div className="hidden md:block md:w-1/2 h-screen">
+//         <img
+//           className="w-[500px] h-[700px] object-contain mx-auto my-auto"
+//           src={doc}
+//           alt="Doctor"
+//         />
+//       </div>
+
+//       <div className="w-full md:w-1/2 flex flex-col items-center justify-center p-8 md:p-12 bg-white">
+//         <div className="w-full max-w-lg text-center bg-white rounded-lg">
+//           <div className="mb-8">
+//             <h1 className="text-4xl font-bold text-gray-800 mb-2">
+//               Welcome to HealthConnect
+//             </h1>
+//             <p className="text-gray-600">
+//               {showOTPForm
+//                 ? "Please enter the verification code sent to your email"
+//                 : "Create your account and start your healthcare journey"}
+//             </p>
+//           </div>
+//         </div>
+
+//         {!showOTPForm ? (
+//           <form
+//             onSubmit={handleSubmit}
+//             className="w-full md:w-3/4 shadow-lg p-8 space-y-4"
+//           >
+//             <input
+//               type="text"
+//               onChange={(e) => setName(e.target.value)}
+//               value={name}
+//               placeholder="Enter full name"
+//               className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 placeholder-gray-500 transition-colors"
+//             />
+//             <input
+//               type="text"
+//               onChange={(e) => setUsername(e.target.value)}
+//               value={username}
+//               placeholder="Username"
+//               className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 placeholder-gray-500 transition-colors"
+//             />
+//             <input
+//               type="email"
+//               onChange={(e) => setEmail(e.target.value)}
+//               value={email}
+//               placeholder="Email"
+//               className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 placeholder-gray-500 transition-colors"
+//             />
+//             <input
+//               type="password"
+//               onChange={(e) => setPassword(e.target.value)}
+//               value={password}
+//               placeholder="Password"
+//               className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 placeholder-gray-500 transition-colors"
+//             />
+//             <button
+//               type="submit"
+//               className="w-full py-3 mt-5 bg-red-500 text-white font-semibold rounded-md hover:bg-red-700 transition duration-300"
+//             >
+//               {loading ? "Signing up..." : "Sign Up"}
+//             </button>
+//           </form>
+//         ) : (
+//           <form
+//             onSubmit={handleVerifyOtp}
+//             className="space-y-4 shadow-lg p-10 w-full max-w-md"
+//           >
+//             <input
+//               type="text"
+//               placeholder="Enter OTP"
+//               value={otp}
+//               onChange={(e) => setOtp(e.target.value)}
+//               className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none"
+//             />
+//             <button
+//               type="submit"
+//               disabled={loading}
+//               className="w-full py-3 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 transition duration-300"
+//             >
+//               {loading ? "Verifying..." : "Verify OTP"}
+//             </button>
+//           </form>
+//         )}
+
+//         {!showOTPForm && (
+//           <p className="mt-6 text-gray-600 text-center">
+//             Already have an account?{" "}
+//             <a
+//               href="/signin"
+//               className="text-red-500 hover:underline font-medium transition-colors"
+//             >
+//               Log In
+//             </a>
+//           </p>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Signup;
